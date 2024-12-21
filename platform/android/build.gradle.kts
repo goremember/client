@@ -52,5 +52,11 @@ kotlin {
 dependencies {
     implementation(libs.androidx.appcompat)
     // compose
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.runtime)
+    implementation(libs.compose.activity)
+
+    debugImplementation(libs.compose.ui.tooling)
 }
