@@ -42,7 +42,7 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
-    namespace = "org.timemates.app"
+    namespace = "com.goremember.client"
 }
 
 kotlin {
@@ -57,6 +57,11 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.runtime)
     implementation(libs.compose.activity)
+    // androidx credentials
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.auth)
+    // google oauth
+    implementation(libs.google.identity)
 
     debugImplementation(libs.compose.ui.tooling)
 }
