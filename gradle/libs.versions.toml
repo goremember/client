@@ -18,9 +18,6 @@ android-min = "24"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat"}
-androidx-credentials = { group = "androidx.credentials", name = "credentials", version = "androidx-credentials" }
-androidx-credentials-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version = "androidx-credentials" }
-
 # compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom"}
 compose-material3 = { module = "androidx.compose.material3:material3" }
@@ -29,9 +26,6 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity"}
 # compose debug
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling"}
-# google oauth
-google-identity = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "google-identity" }
-
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

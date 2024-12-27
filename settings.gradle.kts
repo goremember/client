@@ -25,3 +25,5 @@ include(
     ":platform:android",
     ":platform:desktop",
 )
+
+include("localization")

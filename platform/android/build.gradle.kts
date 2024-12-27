@@ -50,18 +50,14 @@ kotlin {
 }
 
 dependencies {
+    // -- AndroidX --
     implementation(libs.androidx.appcompat)
-    // compose
+    // -- Jetpack Compose --
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.runtime)
     implementation(libs.compose.activity)
-    // androidx credentials
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.auth)
-    // google oauth
-    implementation(libs.google.identity)
-
     debugImplementation(libs.compose.ui.tooling)
+    // -- Modules --
 }
