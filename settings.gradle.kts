@@ -26,4 +26,7 @@ include(
     ":platform:desktop",
 )
 
-include("localization")
+include(
+    ":core:localization",
+    ":core:styles"
+)
