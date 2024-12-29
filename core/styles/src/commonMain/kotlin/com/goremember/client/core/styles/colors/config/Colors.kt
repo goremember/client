@@ -1,4 +1,4 @@
-package com.goremember.client.core.styles.colors
+package com.goremember.client.core.styles.colors.config
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
  * @property surface The color for surfaces like cards, modals, or dialogs.
  * @property surfaceVariant A variant of the surface color for visual differentiation.
  * @property positive A color used to indicate positive actions or states.
- * @property negative A color used to indicate negative actions or states).
+ * @property negative A color used to indicate negative actions or states.
  */
 data class AppColors(
     val primary: Color,
@@ -37,6 +37,15 @@ data class AppColors(
     val negative: Color,
 )
 
+/**
+ * Provides a light theme color palette for the application.
+ *
+ * This function creates an instance of [AppColors] with predefined light theme colors.
+ * These colors are intended for use in the application's light mode, ensuring
+ * consistency with the design system.
+ *
+ * @return An instance of [AppColors] configured for light mode.
+ */
 fun lightAppColors(): AppColors {
     return AppColors(
         primary = Color(0xFFBFC8CA),
@@ -53,5 +62,17 @@ fun lightAppColors(): AppColors {
     )
 }
 
+/**
+ * A CompositionLocal to provide [AppColors] throughout the application.
+ *
+ * This [ProvidableCompositionLocal] is used to define and access the app's color
+ * palette within a [Composable] function. By default, it provides the colors
+ * defined in [lightAppColors], but it can be overridden to supply custom color palettes.
+ *
+ * Usage:
+ * ```kotlin
+ * val colors = LocalAppColors.current
+ * ```
+ */
 val LocalAppColors: ProvidableCompositionLocal<AppColors> =
     staticCompositionLocalOf { lightAppColors() }

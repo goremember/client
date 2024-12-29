@@ -23,6 +23,7 @@ rootProject.name = "goremember-client"
 
 include(
     ":platform:android",
+    ":platform:common",
     ":platform:desktop",
 )
 
