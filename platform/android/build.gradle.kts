@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -59,5 +60,10 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.activity)
     debugImplementation(libs.compose.ui.tooling)
+
+    // -- Decompose --
+    implementation(libs.decompose)
+    implementation(libs.decompose.jetbrains.compose)
     // -- Modules --
+    implementation(projects.platform.common)
 }

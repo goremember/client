@@ -3,10 +3,10 @@ package com.goremember.client.core.styles.colors.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.goremember.client.core.styles.colors.material.DarkColors
-import com.goremember.client.core.styles.colors.material.LightColors
 import com.goremember.client.core.styles.colors.config.shapes
 import com.goremember.client.core.styles.colors.config.typography
+import com.goremember.client.core.styles.colors.material.DarkColors
+import com.goremember.client.core.styles.colors.material.LightColors
 
 /**
  * A composable function to apply the application's theme based on the current theme mode.
