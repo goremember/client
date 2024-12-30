@@ -34,4 +34,5 @@ include(
     ":core:localization",
     ":core:styles",
     ":core:mvi",
+    ":core:navigation",
 )

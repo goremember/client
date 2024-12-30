@@ -60,10 +60,7 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.activity)
     debugImplementation(libs.compose.ui.tooling)
-
-    // -- Decompose --
-    implementation(libs.decompose)
-    implementation(libs.decompose.jetbrains.compose)
     // -- Modules --
+    implementation(projects.core.navigation)
     implementation(projects.platform.common)
 }
