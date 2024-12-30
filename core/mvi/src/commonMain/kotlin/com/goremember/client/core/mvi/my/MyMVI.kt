@@ -1,17 +1,13 @@
 package com.goremember.client.core.mvi.my
 
-import androidx.compose.runtime.Immutable
 import com.arkivanov.decompose.ComponentContext
 import com.goremember.client.core.mvi.MVI
 import pro.respawn.flowmvi.api.MVIAction
 import pro.respawn.flowmvi.api.MVIIntent
 import pro.respawn.flowmvi.api.MVIState
 import pro.respawn.flowmvi.api.Store
-import pro.respawn.flowmvi.dsl.state
-import pro.respawn.flowmvi.dsl.store
 import pro.respawn.flowmvi.essenty.api.DelicateRetainedApi
 import pro.respawn.flowmvi.essenty.dsl.retainedStore
-import pro.respawn.flowmvi.plugins.init
 import pro.respawn.flowmvi.plugins.reduce
 
 data class MyState(

@@ -11,7 +11,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.goremember.client.platform.common"
+    namespace = "com.goremember.client.feature.splash.presentation"
     compileSdk = 35
 
     compileOptions {
@@ -27,9 +27,8 @@ dependencies {
     commonMainImplementation(libs.compose.ui.tooling.preview)
     commonMainImplementation(libs.compose.runtime)
     commonMainImplementation(libs.compose.activity)
-    // -- Koin --
-    commonMainApi(libs.koin.core)
     // -- Modules --
     commonMainApi(projects.core.styles)
     commonMainApi(projects.core.mvi)
+    commonMainApi(projects.core.navigation)
 }

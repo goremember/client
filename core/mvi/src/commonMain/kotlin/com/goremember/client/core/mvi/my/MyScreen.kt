@@ -5,7 +5,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.goremember.client.core.mvi.MVI
-import pro.respawn.flowmvi.compose.dsl.subscribe
 import pro.respawn.flowmvi.essenty.compose.subscribe
 
 @Composable

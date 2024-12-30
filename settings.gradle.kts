@@ -31,6 +31,11 @@ include(
 )
 
 include(
+    "feature:splash:presentation",
+    "feature:splash:dependencies",
+)
+
+include(
     ":core:localization",
     ":core:styles",
     ":core:mvi",

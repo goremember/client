@@ -60,7 +60,11 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.activity)
     debugImplementation(libs.compose.ui.tooling)
+    // -- Koin --
+    implementation(libs.koin.compose)
     // -- Modules --
     implementation(projects.core.navigation)
     implementation(projects.platform.common)
+    implementation(projects.feature.splash.presentation)
+    implementation(projects.feature.splash.dependencies)
 }
