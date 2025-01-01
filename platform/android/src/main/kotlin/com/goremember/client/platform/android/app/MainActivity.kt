@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.DefaultComponentContext
-import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.stack.animation.scale
@@ -24,8 +22,6 @@ import com.goremember.client.core.navigation.Screen
 import com.goremember.client.core.styles.colors.theme.GorememberTheme
 import com.goremember.client.feature.splash.presentation.SplashScreen
 import com.goremember.client.feature.splash.presentation.mvi.SplashComponent
-import org.koin.compose.LocalKoinScope
-import org.koin.core.parameter.ParametersDefinition
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +45,13 @@ class MainActivity : ComponentActivity() {
                         initialStack = { listOf(Screen.SplashScreen) },
                         animation = stackAnimation(fade() + scale()),
                     ) { screen ->
-                        when(screen) {
+                        when (screen) {
                             is Screen.SplashScreen -> SplashScreen(
                                 mvi = SplashComponent(componentContext),
                                 navigateToAuth = { navigation.replaceCurrent(Screen.SplashScreen) },
                                 navigateToHome = { error("Not implemented") },
                             )
+
                             is Screen.AuthTypeScreen -> TODO()
                         }
                     }

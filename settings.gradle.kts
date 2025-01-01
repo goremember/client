@@ -40,4 +40,5 @@ include(
     ":core:styles",
     ":core:mvi",
     ":core:navigation",
+    ":core:validation",
 )
