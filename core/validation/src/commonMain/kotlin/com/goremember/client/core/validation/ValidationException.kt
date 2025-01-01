@@ -1,4 +1,4 @@
-package com.goremember.client.core.validation.failure
+package com.goremember.client.core.validation
 
 public data class ValidationException(
     val failures: List<CreationFailure>,
