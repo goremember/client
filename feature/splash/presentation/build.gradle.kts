@@ -31,4 +31,5 @@ dependencies {
     commonMainApi(projects.core.styles)
     commonMainApi(projects.core.mvi)
     commonMainApi(projects.core.navigation)
+    commonMainImplementation(projects.core.validation)
 }
