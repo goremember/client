@@ -1,93 +1,93 @@
 package com.goremember.client.core.validation
 
-import com.goremember.client.core.validation.rules.ValidationRule
-import com.goremember.client.core.validation.results.SafeCreationResult
+import com.goremember.client.core.validation.results.CreationResult
 import com.goremember.client.core.validation.results.ValidationResult
-import com.goremember.client.core.validation.results.getUnsafe
+import com.goremember.client.core.validation.results.getOrThrow
+import com.goremember.client.core.validation.rules.ValidationRule
 
 /**
- * Represents a generic constructor class for creating objects of type [TBoxed] from TRaw of type [TRaw].
+ * Interface representing a factory that validates and creates values.
  *
- * This class is abstract and provides a template for creating objects. Even if there's no need
- * in validating, we should follow our code-style and provide only [Factory] API.
- *
- * Primary and secondary constructors should be private and use only [Factory] as public API.
- *
- * @param TBoxed The type of object to be created.
- * @param TRaw The type of TRaw used to create the object.
+ * @param T The type of the input to validate.
+ * @param R The type of the created result.
  */
-public interface Factory<TBoxed, TRaw> {
+public interface Factory<T, R> {
+    public val rules: List<ValidationRule<T>>
 
     /**
-     * Validation rules that apply to the creation of [TBoxed] by contract of this factory.
+     * Validates and creates a result based on the given input.
      *
-     * @see ValidationRule
+     * @param input the value to validate and process.
+     * @return a [CreationResult] indicating success or failure.
      */
-    public val rules: List<ValidationRule<TRaw>>
-
-
-    /**
-     * Creates [TBoxed] from [TRaw] in the safe way by validating
-     * [rules] that are defined in the factory.
-     */
-    public fun createSafe(value: TRaw): SafeCreationResult<TRaw, TBoxed>
+    public fun create(input: T): CreationResult
 }
 
-public fun <TBoxed, TRaw> factory(
-    rules: List<ValidationRule<TRaw>>,
-    constructor: (TRaw) -> TBoxed,
-): Factory<TBoxed, TRaw> {
-    return object : Factory<TBoxed, TRaw> {
-        override val rules: List<ValidationRule<TRaw>> by ::rules
-        override fun createSafe(value: TRaw): SafeCreationResult<TRaw, TBoxed> {
-            val failures = rules.mapNotNull { rule ->
-                (rule.validate(value) as? ValidationResult.Invalid)?.failure
+/**
+ * Creates a factory that validates and creates values based on the given validation rules and constructor.
+ *
+ * @param rules the validation rules to apply.
+ * @param constructor the function to create a result from input.
+ * @return a new [Factory] instance.
+ */
+public fun <T, R> create(
+    rules: List<ValidationRule<T>>,
+    constructor: (T) -> R
+): Factory<T, R> {
+    return object : Factory<T, R> {
+        override val rules: List<ValidationRule<T>> = rules
+
+        override fun create(input: T): CreationResult {
+            val errors = rules.mapNotNull { rule ->
+                (rule.validate(input) as? ValidationResult.Failure)?.error
             }
 
-            return if (failures.any())
-                SafeCreationResult.Invalid(value, failures)
-            else SafeCreationResult.Valid(value, constructor(value))
-        }
-    }
-}
-
-public fun <TBoxed, TRaw> factory(
-    constructor: (TRaw) -> TBoxed,
-): Factory<TBoxed, TRaw> {
-    return object : Factory<TBoxed, TRaw> {
-        override val rules: List<ValidationRule<TRaw>> get() = emptyList()
-        override fun createSafe(value: TRaw): SafeCreationResult<TRaw, TBoxed> {
-            return SafeCreationResult.Valid(value, constructor(value))
+            return if (errors.isEmpty()) {
+                CreationResult.Success(constructor(input))
+            } else {
+                CreationResult.Failure(errors)
+            }
         }
     }
 }
 
 /**
- * Creates an instance of the specified [TBoxed] type using the provided [TRaw].
+ * Creates a factory that creates values without validation rules.
  *
- * This function attempts to instantiate an entity of the given type [TBoxed] based on the provided [TRaw].
- * It returns the instantiated entity if the operation is successful, or throws an exception if an error occurs
- * during the instantiation process.
- *
- * @param TRaw The TRaw required for the entity creation.
- * @return The instantiated entity of type [TBoxed].
- * @throws Throwable if an error occurs during the entity creation process.
+ * @param transform the function to create a result from input.
+ * @return a new [Factory] instance.
  */
-public fun <TBoxed, TRaw> Factory<TBoxed, TRaw>.createOrThrow(value: TRaw): TBoxed {
-    return createSafe(value).getUnsafe()
+public fun <T, R> create(
+    transform: (T) -> R
+): Factory<T, R> {
+    return object : Factory<T, R> {
+        override val rules: List<ValidationRule<T>> = emptyList()
+
+        override fun create(input: T): CreationResult {
+            return CreationResult.Success(transform(input))
+        }
+    }
 }
 
 /**
- * Creates an instance of the specified [TBoxed] type using the provided [TRaw].
+ * Validates the input and returns the result or null if validation fails.
  *
- * This function attempts to instantiate an entity of the given type [TBoxed] based on the provided [TRaw].
- * It returns the instantiated entity if the operation is successful, or returns `null` if an error occurs
- * during the instantiation process.
- *
- * @param TRaw The TRaw required for the entity creation.
- * @return The instantiated entity of type [TBoxed], or `null` if an error occurs during the entity creation process.
+ * @param input the value to validate.
+ * @return the transformed value or null if validation fails.
  */
-public fun <TBoxed, TRaw> Factory<TBoxed, TRaw>.createOrNull(value: TRaw): TBoxed? {
-    @Suppress("UNCHECKED_CAST")
-    return (createSafe(value) as? SafeCreationResult.Valid<*, *>)?.boxed as TBoxed
+@Suppress("UNCHECKED_CAST")
+public fun <T, R> Factory<T, R>.createOrNull(input: T): R? {
+    return (create(input) as? CreationResult.Success<*>)?.value as R?
+}
+
+/**
+ * Validates the input and returns the result or throws an exception if validation fails.
+ *
+ * @param input the value to validate.
+ * @return the transformed value.
+ * @throws CreationException if the result is a failure.
+ */
+@Suppress("UNCHECKED_CAST")
+public fun <T, R> Factory<T, R>.createOrThrow(input: T): R {
+    return create(input).getOrThrow()
 }

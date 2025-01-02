@@ -3,19 +3,17 @@ package com.goremember.client.core.validation.rules
 import com.goremember.client.core.validation.results.ValidationResult
 
 /**
- * Defines a rule for validating an input value.
+ * Interface for validating input of type [T].
  *
- * @param Input The type of input that this rule validates.
+ * @param T The type of the input.
  */
-public interface ValidationRule<Input> {
+public interface ValidationRule<T> {
 
     /**
-     * Validates the provided value against this rule.
+     * Validates the input.
      *
-     * @param value The input value to validate.
-     * @return A [ValidationResult] indicating whether the validation was successful or not.
+     * @param input The input to validate.
+     * @return A [ValidationResult] indicating the validation outcome.
      */
-    public fun validate(value: Input): ValidationResult
-
-    public companion object
+    public fun validate(input: T): ValidationResult
 }

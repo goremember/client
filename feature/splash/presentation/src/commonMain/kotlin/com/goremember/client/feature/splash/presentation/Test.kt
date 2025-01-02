@@ -1,32 +1,25 @@
 package com.goremember.client.feature.splash.presentation
 
-import com.goremember.client.core.validation.factory.CreationFactory
-import com.goremember.client.core.validation.result.CreationResult
-import com.goremember.client.core.validation.factory.factory
-import com.goremember.client.core.validation.rules.MaxLengthValidationRule
-import com.goremember.client.core.validation.rules.MinLengthValidationRule
-import com.goremember.client.core.validation.rules.RegexValidationRule
-import com.goremember.client.core.validation.rules.ValidationRule
+import com.goremember.client.core.validation.Factory
+import com.goremember.client.core.validation.rules.RegexRule
+import com.goremember.client.core.validation.create
+import com.goremember.client.core.validation.createOrThrow
 
-// TODO DELETE AND IMPLEMENTATION FROM THIS MODULE
-@JvmInline
-value class PhoneNumber private constructor(val string: String) {
+data class Email(val value: String) {
     companion object {
-        @JvmStatic
-        val REGEX = ""
+        private val emailRegex = Regex("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$")
 
-        @JvmStatic
-        val factory: CreationFactory<PhoneNumber, String> = factory(
+        val factory: Factory<String, Email> = create(
             rules = listOf(
-                RegexValidationRule(Regex.fromLiteral(REGEX)),
-                MaxLengthValidationRule(15),
-                MinLengthValidationRule(8),
+                RegexRule(emailRegex)
             ),
-            constructor = ::PhoneNumber
+            constructor = ::Email
         )
     }
 }
 
 fun main() {
-    val number = PhoneNumber.factory.createSafe("+380977854850")
+    val emailInput = "test@example.com"
+
+    val result = Email.factory.createOrThrow(emailInput)
 }
