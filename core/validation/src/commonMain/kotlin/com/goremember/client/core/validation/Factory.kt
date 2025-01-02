@@ -30,7 +30,7 @@ public interface Factory<T, R> {
  * @param constructor the function to create a result from input.
  * @return a new [Factory] instance.
  */
-public fun <T, R> create(
+public fun <T, R> factory(
     rules: List<ValidationRule<T>>,
     constructor: (T) -> R
 ): Factory<T, R> {
@@ -57,7 +57,7 @@ public fun <T, R> create(
  * @param transform the function to create a result from input.
  * @return a new [Factory] instance.
  */
-public fun <T, R> create(
+public fun <T, R> factory(
     transform: (T) -> R
 ): Factory<T, R> {
     return object : Factory<T, R> {
